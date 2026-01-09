@@ -1,0 +1,72 @@
+# ~/.bashrc
+
+# Change Bash Prompt - https://bash-prompt-generator.org/
+PROMPT_COMMAND='
+  GIT_BRANCH=$(git branch --show-current 2>/dev/null)
+  GIT_STATUS=$(git status --short 2>/dev/null)
+  if [ -n "$GIT_BRANCH" ]; then
+        if [ -n "$GIT_STATUS" ]; then
+                PS1_GIT_INFO=$(printf "%b" "(\e[91m${GIT_BRANCH}\e[0m)\n\e[91m${GIT_STATUS}")
+        else
+                PS1_GIT_INFO=$(printf "%b" "(\e[91m${GIT_BRANCH}\e[0m)")
+        fi
+  else
+    PS1_GIT_INFO=""
+  fi'
+PS1='\[\e[36m\]\u\[\e[94m\]@\h\[\e[93m\]:\w\[\e[0m\] ${PS1_GIT_INFO}\n  \[\e[31m\]\$\[\e[0m\] '
+
+# Variables
+export EDITOR='nvim'
+
+# Aliases
+alias editBash="nvim ~/.bashrc"
+alias ls='ls --color=auto'
+alias ll='ls -lA'
+alias la='ls -A'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ip='ip -c'
+alias cp='cp -r'
+alias cu='cd ..'
+alias cb='cd -'
+alias mkdir='mkdir -p'
+alias tree='tree -alC --dirsfirst'
+
+# Functions
+updateRaspi(){
+        echo ""
+        echo "Updating Packages"
+        sudo apt update -y
+        sudo apt full-upgrade -y
+        sudo apt autoremove -y --purge
+        sudo pihole -up
+        echo ""
+}
+
+myNmap(){
+        # first argument should be target ip addr
+        nmap -v -A -Pn -p 1-65535 "$1"
+}
+
+docScan(){
+        # documents should be face down and upside down
+        if [ -n "$1" ]; then
+                mkdir ~/scan
+                cd ~/scan
+                mkdir tmp
+                cd tmp
+                scanimage --format=pnm --verbose --progress --resolution=300 --batch=out%03d.pnm --device='fujitsu:ScanSnap S1500:272145' --source 'ADF Duplex'
+                # sudoedit /etc/ImageMagick*/policy.xml # change none to read|write for pdf and change memory to 4GiB
+                convert out*.pnm -deskew 40% -density 150 -verbose $1.pdf
+                mv $1.pdf ../
+                rm *.pnm
+                cd ..
+                rmdir tmp
+                cd ..
+        else
+                echo "Error: Input file name"
+        fi
+}
