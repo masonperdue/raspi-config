@@ -65,6 +65,7 @@ docScan(){
                 rm *.pnm
                 cd ..
                 rmdir tmp
+                gs -dNOPAUSE -sDEVICE=pdfwrite -sPAPERSIZE=letter -dPDFFitPage -sOutputFile=$1.pdf $1.pdf
                 cd ..
         else
                 echo "Error: Input file name"
