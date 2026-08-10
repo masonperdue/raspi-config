@@ -42,7 +42,16 @@ updateRaspi(){
         sudo apt update -y
         sudo apt full-upgrade -y
         sudo apt autoremove -y --purge
-        sudo pihole -up
+        sudo apt autoclean
+        # Update Blocky?
+        echo ""
+        
+        echo "Sourcing ~/.bashrc"
+        cd ~/.myconfig/raspi-config
+        git pull
+        source ~/.bashrc
+        cd
+
         echo ""
 }
 

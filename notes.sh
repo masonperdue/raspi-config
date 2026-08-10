@@ -10,8 +10,11 @@
     # No WiFi
     # Username: masonp
     # SSH w/ Pubkey Auth
+        ssh-keygen -t ed25519 -C "[email]"
+            # id_ed25519-raspi
+            # passphrase
     # MAC IP Binded in Router to 192.168.50.20
-    # ssh masonp@192.168.50.20 -i ~/.ssh/id_ed25519-Raspi
+    # ssh masonp@192.168.50.20 -i ~/.ssh/id_ed25519-raspi
         sudo apt update -y
         sudo apt full-upgrade -y
         sudo apt autoremove --purge -y
@@ -21,7 +24,6 @@
             # update
         sudo reboot now
     # ssh masonp@192.168.50.20 -i ~/.ssh/id_ed25519-Raspi
-        sudo rm /etc/sudoers.d/010_pi-nopasswd
         sudoedit /etc/ssh/sshd_config
             # change to "Port 7583"
             # change to "PermitRootLogin no"
@@ -38,8 +40,6 @@
         sudo rm /etc/motd         
         sudo reboot now
     # ssh raspi
-        sudo apt purge -y vim-common vim-tiny
-        sudo apt autoremove --purge -y
         sudo apt install -y git neovim tree sane-utils nmap unattended-upgrades dnsutils imagemagick
         sudo dpkg-reconfigure unattended-upgrades
             # yes
@@ -49,18 +49,24 @@
         git clone https://github.com/masonperdue/neovim-config.git
         cd raspi-config
         ./setup.sh
+        cd ..
+        cd neovim-config
+        ./setup.sh
         source ~/.bashrc
-        usermod -aG scanner masonp
+        sudo usermod -aG scanner masonp
 
-# Pi-hole
-    cd
-    git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
-    cd Pi-hole/"automated install"/
-    sudo bash basic-install.sh
-        # save password
-    # https://192.168.50.20/admin/login
-    sudo usermod -aG pihole masonp
-    # run "sudo pihole -up" to update 
+
+# Set raspi dns to cloudflare (so software can update w/o servers running)
+    nmcli connection show
+    sudo nmcli con mod netplan-eth0 ipv4.dns 1.1.1.1
+    sudo nmcli con mod netplan-eth0 ipv4.ignore-auto-dns yes
+    sudo nmcli con up netplan-eth0
+    # sudo nmcli radio wifi off
+    nmcli dev show
+    dig startpage.com
+
+# Blocky
+
 
 # Unbound
     sudo apt install -y unbound
@@ -83,19 +89,11 @@
     dig +ad dnssec.works @127.0.0.1 -p 5335
     ss -tuln
 
-# Set raspi dns to cloudflare (so software can update w/o servers running)
-    nmcli connection show
-    sudo nmcli con mod netplan-eth0 ipv4.dns 1.1.1.1
-    sudo nmcli con mod netplan-eth0 ipv4.ignore-auto-dns yes
-    sudo nmcli con up netplan-eth0
-    nmcli dev show
-    dig startpage.com
-
 # Firewalld
     sudo apt install -y firewalld
     sudo systemctl status firewalld.service
     sudo firewall-cmd --set-default-zone drop
-    sudo firewall-cmd --zone=drop --add-port=7583/tcp --add-port=53/tcp --add-port=53/udp --add-port=80/tcp --add-port-443/tcp
+    sudo firewall-cmd --zone=drop --add-port=7583/tcp --add-port=53/tcp --add-port=53/udp # --add-port=80/tcp --add-port-443/tcp
     sudo firewall-cmd --runtime-to-permanent
     sudo firewall-cmd --state
     sudo firewall-cmd --get-default-zone
