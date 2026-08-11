@@ -65,21 +65,35 @@
     nmcli dev show
     dig startpage.com
 
-# Blocky & Unbound (Podman)
+# Blocky
     sudo apt install -y podman
     cd /etc/containers/systemd
-    touch blocky.container
+    touch {{blocky,unbound}.container,Containerfile,unbound.build,unbound.conf}
     cd /etc/blocky
     touch {config.yml,allowlist.txt,blocklist.txt}
+    # sudo ss -tuln
     sudo systemctl daemon-reload
-    # systemctl cat blocky.service
-    sudo systemctl start blocky.service
-    # systemctl status blocky.service
-    # ss -tuln
-    dig google.com @127.0.0.1 -p 53
-    dig doubleclick.net @127.0.0.1 -p 53
+    sudo systemctl start unbound-build.service
+    sudo journalctl -u unbound-build.service -f --no-pager -n 20
+    sudo podman image list --all
+    sudo systemctl start unbound.service blocky.service
+    sudo podman container list
+    dig @127.0.0.1 -p 5335 google.com +short
+    dig @127.0.0.1 -p 53 google.com +short
+    dig @127.0.0.1 -p 53 doubleclick.net +short
+    dig @127.0.0.1 -p 5335 cloudflare.com +dnssec
+    dig @127.0.0.1 -p 5335 dnssec-failed.org
+    dig @127.0.0.1 -p 5335 dnssec-failed.org +cd
+    dig @127.0.0.1 -p 53 cloudflare.com +dnssec
+    dig @127.0.0.1 -p 53 dnssec-failed.org
+    dig @127.0.0.1 -p 53 dnssec-failed.org +cd
+    sudo reboot now
 
-    
+# Unbound
+
+
+
+
 
 # Unbound
     sudo apt install -y unbound unbound-anchor
