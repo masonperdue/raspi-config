@@ -65,11 +65,12 @@
     nmcli dev show
     dig startpage.com
 
-# Blocky
+# Blocky & Unbound (Docker Compose)
+    
 
 
 # Unbound
-    sudo apt install -y unbound
+    sudo apt install -y unbound unbound-anchor
     unbound -V
     sudo systemctl edit unbound.service
         # [Service]

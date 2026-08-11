@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/0xERR0R/blocky/main/docs/config.schema.json
+
+upstreams:
+    init:
+        strategy: blocking
+    groups:
+      default:
+        - unbound:53
+    strategy: strict
+    timeout: 2s
+
+connectIPVersion: v4
+
+customDNS:
+    customTTL: 1h
+    mapping:
+        router.lan: 192.168.50.1
+        printer.lan: 192.168.50.30
+        raspi.lan: 192.168.50.20
+
+blocking:
+    denylists:
+        ads:
+            - blocklist.txt
+            - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
+    allowlists:
+        ads:
+            - allowlist.txt
+    clientGroupsBlock:
+        default:
+            - ads
+    blockType: zeroIP
+    blockTTL: 1h
+    loading:
+        refreshPeriod: 24h
+        downloads:
+          timeout: 60s
+          writeTimeout: 60s
+          readTimeout: 60s
+          readHeaderTimeout: 60s
+          attempts: 3
+          cooldown: 500ms
+          cachePath: /var/cache/blocky/lists
+        concurrency: 4
+        strategy: blocking
+        maxErrorsPerSource: 5
+
+caching:
+    minTime: 5m
+    maxTime: 0
+    maxItemsCount: 0
+    prefetching: true
+
+# Add prometheus later
+
+rebindingProtection:
+    enable: true
+
+rateLimit:
+    enable: true
+    rate: 100
+    burst: 200
+
+ports:
+    dns: 53
+
+ede:
+    enable: true
+
+dnssec:
+    validate: false
