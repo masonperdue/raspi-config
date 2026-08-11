@@ -65,9 +65,21 @@
     nmcli dev show
     dig startpage.com
 
-# Blocky & Unbound (Docker Compose)
-    
+# Blocky & Unbound (Podman)
+    sudo apt install -y podman
+    cd /etc/containers/systemd
+    touch blocky.container
+    cd /etc/blocky
+    touch {config.yml,allowlist.txt,blocklist.txt}
+    sudo systemctl daemon-reload
+    # systemctl cat blocky.service
+    sudo systemctl start blocky.service
+    # systemctl status blocky.service
+    # ss -tuln
+    dig google.com @127.0.0.1 -p 53
+    dig doubleclick.net @127.0.0.1 -p 53
 
+    
 
 # Unbound
     sudo apt install -y unbound unbound-anchor
