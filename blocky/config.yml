@@ -5,7 +5,8 @@ upstreams:
         strategy: blocking
     groups:
       default:
-        - 127.0.0.1:5335
+        - 1.1.1.1
+        # - 127.0.0.1:5335
     strategy: strict
     timeout: 2s
 
@@ -21,11 +22,11 @@ customDNS:
 blocking:
     denylists:
         ads:
-            - blocklist.txt
+            - /app/denylists/blocklist.txt
             - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
     allowlists:
         ads:
-            - allowlist.txt
+            - /app/allowlists/allowlist.txt
     clientGroupsBlock:
         default:
             - ads
@@ -40,7 +41,7 @@ blocking:
           readHeaderTimeout: 60s
           attempts: 3
           cooldown: 500ms
-          cachePath: /var/cache/blocky/lists
+          cachePath: /app/cache
         concurrency: 4
         strategy: blocking
         maxErrorsPerSource: 5

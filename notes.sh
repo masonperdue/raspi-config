@@ -65,7 +65,7 @@
     nmcli dev show
     dig startpage.com
 
-# Blocky
+# Blocky & Unbound
     sudo apt install -y podman
     cd /etc/containers/systemd
     touch {{blocky,unbound}.container,Containerfile,unbound.build,unbound.conf}
@@ -88,44 +88,6 @@
     dig @127.0.0.1 -p 53 dnssec-failed.org
     dig @127.0.0.1 -p 53 dnssec-failed.org +cd
     sudo reboot now
-
-# Unbound
-
-
-
-
-
-# Unbound
-    sudo apt install -y unbound unbound-anchor
-    unbound -V
-    sudo systemctl edit unbound.service
-        # [Service]
-        # ExecStartPre=timeout 60s sh -c 'until ping -c1 192.168.50.1; do sleep 1; done;'
-    sudo systemctl cat unbound.service
-    sudo systemctl daemon-reload
-    sudo touch /var/log/unbound.log
-    sudo chown unbound:unbound /var/log/unbound.log
-    sudo touch /etc/unbound/unbound.conf.d/custom.conf
-    sudoedit /etc/unbound/unboud.conf.d/custom.conf
-    unbound-checkconf /etc/unbound/unbound.conf.d/custom.conf
-    sudo systemctl restart unbound.service
-    # unbound -d -vv -c /etc/unbound/unbound.conf
-    sudo systemctl status unbound.service
-    dig google.com @127.0.0.1 -p 5335
-    dig fail01.dnssec.works @127.0.0.1 -p 5335
-    dig +ad dnssec.works @127.0.0.1 -p 5335
-    ss -tuln
-
-# Firewalld
-    sudo apt install -y firewalld
-    sudo systemctl status firewalld.service
-    sudo firewall-cmd --set-default-zone drop
-    sudo firewall-cmd --zone=drop --add-port=7583/tcp --add-port=53/tcp --add-port=53/udp # --add-port=80/tcp --add-port-443/tcp
-    sudo firewall-cmd --runtime-to-permanent
-    sudo firewall-cmd --state
-    sudo firewall-cmd --get-default-zone
-    sudo firewall-cmd --get-active-zones
-    sudo firewall-cmd --list-all
 
 # Immich
     mkdir ~/.config/containers/systemd/immich
@@ -151,3 +113,14 @@
     adb shell settings get secure screensaver_components
     # adb shell dumpsys deviceidle whitelist +nl.giejay.android.tv.immich
     # adb shell cmd appops set nl.giejay.android.tv.immich RUN_IN_BACKGROUND allow
+
+# Firewalld
+    sudo apt install -y firewalld
+    sudo systemctl status firewalld.service
+    sudo firewall-cmd --set-default-zone drop
+    sudo firewall-cmd --zone=drop --add-port=7583/tcp --add-port=53/tcp --add-port=53/udp # --add-port=80/tcp --add-port-443/tcp
+    sudo firewall-cmd --runtime-to-permanent
+    sudo firewall-cmd --state
+    sudo firewall-cmd --get-default-zone
+    sudo firewall-cmd --get-active-zones
+    sudo firewall-cmd --list-all

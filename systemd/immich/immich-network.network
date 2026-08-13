@@ -1,3 +1,0 @@
-# ~/.config/containers/systemd/immich-network.network
-[Network]
-NetworkName=immich-net
