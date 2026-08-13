@@ -126,3 +126,19 @@
     sudo firewall-cmd --get-default-zone
     sudo firewall-cmd --get-active-zones
     sudo firewall-cmd --list-all
+
+
+# Immich
+    sudo mkdir /etc/containers/systemd/immich
+    cd /etc/containers/systemd/immich
+    sudo touch immich-network.network immich-db.container immich-redis.container immich-ml.container immich-server.container
+    sudo mkdir /etc/immich/photos
+    sudo mkdir /etc/immich/immich-ml-cache
+
+    
+    sudo systemctl daemon-reload
+    # loginctl enable-linger $USER
+    sudo systemctl start immich-server.service
+    sudo systemctl status immich-server.service
+    sudo podman logs -f immich-server
+    # http://192.168.50.20:2283

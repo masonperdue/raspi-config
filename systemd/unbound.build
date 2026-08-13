@@ -1,0 +1,8 @@
+[Unit]
+DefaultDependencies=false
+
+[Build]
+ImageTag=unbound
+SetWorkingDirectory=/etc/containers/systemd/
+File=Containerfile
+Pull=newer

@@ -1,0 +1,12 @@
+# ~/.config/containers/systemd/immich-ml.container
+[Unit]
+Description=Immich Machine Learning Engine
+
+[Container]
+ContainerName=immich-ml
+Image=ghcr.io/immich-app/immich-machine-learning:release
+Network=immich-network.network
+Volume=/etc/immich/immich-ml-cache:/cache:Z
+
+[Service]
+Restart=always
