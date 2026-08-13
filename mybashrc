@@ -33,7 +33,8 @@ alias cp='cp -r'
 alias cu='cd ..'
 alias cb='cd -'
 alias mkdir='mkdir -p'
-alias tree='tree -alC --dirsfirst'
+alias tree='tree -lC --dirsfirst'
+alias trea='tree -alC --dirsfirst'
 
 # Functions
 updateRaspi(){

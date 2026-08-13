@@ -127,15 +127,27 @@
     sudo firewall-cmd --get-active-zones
     sudo firewall-cmd --list-all
 
-
 # Immich
-    sudo mkdir /etc/containers/systemd/immich
-    cd /etc/containers/systemd/immich
-    sudo touch immich-network.network immich-db.container immich-redis.container immich-ml.container immich-server.container
-    sudo mkdir /etc/immich/photos
-    sudo mkdir /etc/immich/immich-ml-cache
-    sudo systemctl daemon-reload
-    # loginctl enable-linger $USER
-    sudo systemctl start immich-server.service
-    sudo systemctl status immich-server.service
+    mkdir ~/.config/containers/systemd/immich
+    cd ~/.config/containers/systemd/immich
+    touch immich-network.network immich-db.container immich-redis.container immich-ml.container immich-server.container
+    mkdir ~/.volumes/immich/photos
+    mkdir ~/.volumes/immich/immich-ml-cache
+    mkdir ~/.volumes/immich/immich-db-data
+    mkdir ~/.volumes/immich/immich-redis-data
+    systemctl --user daemon-reload
+    loginctl enable-linger masonp
+    systemctl --user start immich-server.service
+    systemctl --user status immich-server.service
     # http://192.168.50.20:2283
+    # Install Immich TV (Unofficial) by GJ Compagner from Play Store on TV
+    # Get API Key from Immich website to sign into to TV app
+    # Turn on developer options and wireless debugging on Google TV
+    sudo apt install -y adb
+    adb connect YOUR_TV_IP_ADDRESS
+    adb shell settings put secure screensaver_components nl.giejay.android.tv.immich/.screensaver.ScreenSaverService
+    adb shell settings put secure screensaver_enabled 1
+    adb shell settings put system screen_off_timeout 300000
+    adb shell settings get secure screensaver_components
+    # adb shell dumpsys deviceidle whitelist +nl.giejay.android.tv.immich
+    # adb shell cmd appops set nl.giejay.android.tv.immich RUN_IN_BACKGROUND allow
