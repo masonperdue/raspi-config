@@ -1,6 +1,8 @@
 
 # DO NOT RUN - NOTES ONLY
 
+# DO: Make new unprivledged user for rootless podman
+
 # Server Setup
     # Raspberry Pi OS Lite
     # Hostname: raspi
@@ -46,15 +48,10 @@
         mkdir ~/.myconfig
         cd ~/.myconfig
         git clone https://github.com/masonperdue/raspi-config.git
-        git clone https://github.com/masonperdue/neovim-config.git
         cd raspi-config
-        ./setup.sh
-        cd ..
-        cd neovim-config
         ./setup.sh
         source ~/.bashrc
         sudo usermod -aG scanner masonp
-
 
 # Set raspi dns to cloudflare (so software can update w/o servers running)
     nmcli connection show
@@ -67,40 +64,38 @@
 
 # Blocky & Unbound
     sudo apt install -y podman
-    cd /etc/containers/systemd
-    touch {{blocky,unbound}.container,Containerfile,unbound.build,unbound.conf}
-    cd /etc/blocky
-    touch {config.yml,allowlist.txt,blocklist.txt}
+    sudo touch /etc/containers/systemd/{{blocky,unbound}.container,Containerfile,unbound.build,unbound.conf}
+    sudo touch /etc/blocky/{config.yml,allowlist.txt,blocklist.txt}
     # sudo ss -tuln
     sudo systemctl daemon-reload
     sudo systemctl start unbound-build.service
-    sudo journalctl -u unbound-build.service -f --no-pager -n 20
-    sudo podman image list --all
+    # sudo journalctl -u unbound-build.service -f --no-pager -n 20
+    # sudo podman image list --all
     sudo systemctl start unbound.service blocky.service
-    sudo podman container list
-    dig @127.0.0.1 -p 5335 google.com +short
-    dig @127.0.0.1 -p 53 google.com +short
-    dig @127.0.0.1 -p 53 doubleclick.net +short
-    dig @127.0.0.1 -p 5335 cloudflare.com +dnssec
-    dig @127.0.0.1 -p 5335 dnssec-failed.org
-    dig @127.0.0.1 -p 5335 dnssec-failed.org +cd
-    dig @127.0.0.1 -p 53 cloudflare.com +dnssec
-    dig @127.0.0.1 -p 53 dnssec-failed.org
-    dig @127.0.0.1 -p 53 dnssec-failed.org +cd
+    sudo systemctl enable --now podman-auto-update.timer
+    # sudo podman container list
+    # dig @127.0.0.1 -p 5335 google.com +short
+    # dig @127.0.0.1 -p 53 google.com +short
+    # dig @127.0.0.1 -p 53 doubleclick.net +short
+    # dig @127.0.0.1 -p 5335 cloudflare.com +dnssec
+    # dig @127.0.0.1 -p 5335 dnssec-failed.org
+    # dig @127.0.0.1 -p 5335 dnssec-failed.org +cd
+    # dig @127.0.0.1 -p 53 cloudflare.com +dnssec
+    # dig @127.0.0.1 -p 53 dnssec-failed.org
+    # dig @127.0.0.1 -p 53 dnssec-failed.org +cd
     sudo reboot now
+    # DO: Add more block/allow lists & domains
 
 # Immich
     mkdir ~/.config/containers/systemd/immich
-    cd ~/.config/containers/systemd/immich
-    touch immich-network.network immich-db.container immich-redis.container immich-ml.container immich-server.container
-    mkdir ~/.volumes/immich/photos
-    mkdir ~/.volumes/immich/immich-ml-cache
-    mkdir ~/.volumes/immich/immich-db-data
-    mkdir ~/.volumes/immich/immich-redis-data
+    cd 
+    touch ~/.config/containers/systemd/immich/{immich-network.network,immich-db.container,immich-redis.container,immich-ml.container,immich-server.container}
+    mkdir ~/.volumes/immich/{photos,immich-ml-cache,immich-db-data,immich-redis-data}
     systemctl --user daemon-reload
     loginctl enable-linger masonp
     systemctl --user start immich-server.service
-    systemctl --user status immich-server.service
+    systemctl --user enable --now podman-auto-update.timer
+    # systemctl --user status immich-server.service
     # http://192.168.50.20:2283
     # Install Immich TV (Unofficial) by GJ Compagner from Play Store on TV
     # Get API Key from Immich website to sign into to TV app
@@ -109,10 +104,39 @@
     adb connect YOUR_TV_IP_ADDRESS
     adb shell settings put secure screensaver_components nl.giejay.android.tv.immich/.screensaver.ScreenSaverService
     adb shell settings put secure screensaver_enabled 1
-    adb shell settings put system screen_off_timeout 300000
+    adb shell settings put system screen_off_timeout 60000
     adb shell settings get secure screensaver_components
     # adb shell dumpsys deviceidle whitelist +nl.giejay.android.tv.immich
     # adb shell cmd appops set nl.giejay.android.tv.immich RUN_IN_BACKGROUND allow
+    # DO: Change Passwords, Backup DB
+
+# Caddy
+    touch ~/.config/containers/systemd/{caddy/caddy.container,caddy/Containerfile,caddy/caddy.build,lan.network}
+    mkdir ~/.volumes/caddy/{site,data,config}
+    touch ~/.volumes/caddy/Caddyfile
+    sudo sysctl -w net.ipv4.ip_unprivileged_port_start=80
+    sudoedit /etc/sysctl.d/99-podman.conf
+        # Add: net.ipv4.ip_unprivileged_port_start=80
+    systemctl --user daemon-reload
+    systemctl 
+    systemctl --user start caddy.service
+    # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
+    # HIDE API TOKEN
+
+# Victoria Metrics & Grafana & Prometheus Node Exporter
+
+
+# Uptime Kuma + Ntfy
+
+
+# IT-Tools
+
+
+# Home Assistant & Music Assistant
+
+
+# Tailscale
+
 
 # Firewalld
     sudo apt install -y firewalld

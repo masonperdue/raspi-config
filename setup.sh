@@ -6,3 +6,8 @@ echo "" >> /home/masonp/.bashrc
 echo ". /home/masonp/.bashrc.d/*" >> /home/masonp/.bashrc
 mkdir /home/masonp/.bashrc.d
 ln -sf /home/masonp/.myconfig/raspi-config/mybashrc /home/masonp/.bashrc.d/
+cd ~/.myconfig
+git clone https://github.com/masonperdue/neovim-config.git
+cd neovim-config
+./setup.sh
+cd
