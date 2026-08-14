@@ -1,0 +1,22 @@
+[Unit]
+Description=Caddy container
+
+[Container]
+Image=localhost/caddy:latest
+ContainerName=caddy
+Environment=CLOUDFLARE_API_TOKEN=
+Volume=/home/masonp/.volumes/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,Z
+Volume=/home/masonp/.volumes/caddy/site:/srv:Z
+Volume=/home/masonp/.volumes/caddy/data:/data:Z
+Volume=/home/masonp/.volumes/caddy/config:/config:Z
+PublishPort=80:80
+PublishPort=443:443
+PublishPort=443:443/udp
+Network=lan.network
+
+[Service]
+Restart=always
+RestartSec=1s
+
+[Install]
+WantedBy=default.target

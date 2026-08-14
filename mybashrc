@@ -44,7 +44,6 @@ updateRaspi(){
         sudo apt full-upgrade -y
         sudo apt autoremove -y --purge
         sudo apt autoclean
-        # Update Blocky?
         echo ""
         
         echo "Sourcing ~/.bashrc"

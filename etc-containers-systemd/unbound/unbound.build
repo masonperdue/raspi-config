@@ -3,6 +3,6 @@ DefaultDependencies=false
 
 [Build]
 ImageTag=unbound
-SetWorkingDirectory=/etc/containers/systemd/
+SetWorkingDirectory=/etc/containers/systemd/unbound/
 File=Containerfile
 Pull=newer

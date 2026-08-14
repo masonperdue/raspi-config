@@ -4,8 +4,9 @@ Description=Immich Redis Service
 [Container]
 ContainerName=immich-redis
 Image=docker.io/valkey/valkey:9@sha256:8e8d64b405ce18f41b8e5ee20aa4687a8ed0022d1298f2ce31cdcf3a76e09411
-Network=immich.network
+Network=lan.network
 Volume=/home/masonp/.volumes/immich/immich-redis-data:/data:Z
+AutoUpdate=registry
 
 [Service]
 Restart=always

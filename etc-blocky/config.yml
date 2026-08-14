@@ -5,8 +5,7 @@ upstreams:
         strategy: blocking
     groups:
       default:
-        - 1.1.1.1
-        # - 127.0.0.1:5335
+        - 127.0.0.1:5335
     strategy: strict
     timeout: 2s
 
@@ -14,10 +13,13 @@ connectIPVersion: v4
 
 customDNS:
     customTTL: 1h
+    filterUnmappedTypes: true
     mapping:
-        router.lan: 192.168.50.1
-        printer.lan: 192.168.50.30
-        raspi.lan: 192.168.50.20
+        modem.home.arpa: 192.168.100.1
+        router.home.arpa: 192.168.50.1
+        printer.home.arpa: 192.168.50.30
+        home.masonperdue.com: 192.168.50.20
+        "*.home.masonperdue.com": 192.168.50.20
 
 blocking:
     denylists:
@@ -51,8 +53,6 @@ caching:
     maxTime: 0
     maxItemsCount: 0
     prefetching: true
-
-# Add prometheus later
 
 rebindingProtection:
     enable: true

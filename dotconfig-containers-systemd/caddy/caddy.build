@@ -1,0 +1,7 @@
+[Unit]
+
+[Build]
+ImageTag=caddy
+SetWorkingDirectory=/home/masonp/.config/containers/systemd/caddy
+File=Containerfile
+Pull=newer

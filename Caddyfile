@@ -1,0 +1,18 @@
+{
+    acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+}
+
+*.home.masonperdue.com {
+    tls {
+        resolvers 1.1.1.1
+    }
+
+    @immich host immich.home.masonperdue.com
+    handle @immich {
+        reverse_proxy host.containers.internal:2283
+    }
+
+    handle {
+        respond "404 Not Found" 404
+    }
+}

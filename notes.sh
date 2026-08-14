@@ -1,7 +1,8 @@
 
 # DO NOT RUN - NOTES ONLY
 
-# DO: Make new unprivledged user for rootless podman
+# DO: Make new unprivledged user for rootless podman, Victoria Metrics & Grafana & Prometheus Node Exporter, Uptime Kuma + Ntfy, IT-Tools, Tailscale
+# DO: Add more block/allow lists & domains to Blocky
 
 # Server Setup
     # Raspberry Pi OS Lite
@@ -84,7 +85,6 @@
     # dig @127.0.0.1 -p 53 dnssec-failed.org
     # dig @127.0.0.1 -p 53 dnssec-failed.org +cd
     sudo reboot now
-    # DO: Add more block/allow lists & domains
 
 # Immich
     mkdir ~/.config/containers/systemd/immich
@@ -108,7 +108,6 @@
     adb shell settings get secure screensaver_components
     # adb shell dumpsys deviceidle whitelist +nl.giejay.android.tv.immich
     # adb shell cmd appops set nl.giejay.android.tv.immich RUN_IN_BACKGROUND allow
-    # DO: Change Passwords, Backup DB
 
 # Caddy
     touch ~/.config/containers/systemd/{caddy/caddy.container,caddy/Containerfile,caddy/caddy.build,lan.network}
@@ -121,21 +120,9 @@
     systemctl 
     systemctl --user start caddy.service
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
-    # HIDE API TOKEN
-
-# Victoria Metrics & Grafana & Prometheus Node Exporter
-
-
-# Uptime Kuma + Ntfy
-
-
-# IT-Tools
-
 
 # Home Assistant & Music Assistant
-
-
-# Tailscale
+    
 
 
 # Firewalld
@@ -148,3 +135,13 @@
     sudo firewall-cmd --get-default-zone
     sudo firewall-cmd --get-active-zones
     sudo firewall-cmd --list-all
+
+# Backup
+    scp -r raspi:/etc/blocky etc-blocky
+    scp -r raspi:/etc/containers/systemd etc-containers-systemd
+    rm -rf etc-containers-systemd/users
+    scp -r raspi:~/.config/containers/systemd dotconfig-containers-systemd
+    # scp -r raspi:~/.volumes volumes
+    scp -r raspi:~/.volumes/caddy/Caddyfile Caddyfile
+    # Remove Cloudflare API Token from caddy.container
+    # Remove Immich DB Password from immich-db.container and immich.container

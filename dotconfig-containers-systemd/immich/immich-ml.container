@@ -4,8 +4,9 @@ Description=Immich Machine Learning Engine
 [Container]
 ContainerName=immich-ml
 Image=ghcr.io/immich-app/immich-machine-learning:release
-Network=immich.network
+Network=lan.network
 Volume=/home/masonp/.volumes/immich/immich-ml-cache:/cache:Z
+AutoUpdate=registry
 
 [Service]
 Restart=always
