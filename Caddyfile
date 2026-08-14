@@ -2,7 +2,7 @@
     acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 }
 
-*.home.masonperdue.com {
+home.masonperdue.com, *.home.masonperdue.com {
     tls {
         resolvers 1.1.1.1
     }
@@ -10,6 +10,11 @@
     @immich host immich.home.masonperdue.com
     handle @immich {
         reverse_proxy host.containers.internal:2283
+    }
+
+    @owntone host owntone.home.masonperdue.com
+    handle @owntone {
+        reverse_proxy host.containers.internal:3689
     }
 
     handle {

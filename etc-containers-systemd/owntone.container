@@ -1,0 +1,23 @@
+[Unit]
+Description=OwnTone Container
+After=network-online.target
+Requires=network-online.target
+
+[Container]
+ContainerName=owntone
+Image=docker.io/owntone/owntone:latest
+AutoUpdate=registry
+Network=host
+HostName=owntone
+Environment=UID=0
+Environment=GID=0
+Volume=/etc/owntone/etc:/etc/owntone:Z
+Volume=/etc/owntone/media:/srv/media:Z
+Volume=/etc/owntone/cache:/var/cache/owntone:Z
+AddDevice=-/dev/snd
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target

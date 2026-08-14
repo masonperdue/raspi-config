@@ -3,6 +3,8 @@
 
 # DO: Make new unprivledged user for rootless podman, Victoria Metrics & Grafana & Prometheus Node Exporter, Uptime Kuma + Ntfy, IT-Tools, Tailscale
 # DO: Add more block/allow lists & domains to Blocky
+# DO: Change Immich DB Password
+# DO: Backup Immich
 
 # Server Setup
     # Raspberry Pi OS Lite
@@ -121,9 +123,15 @@
     systemctl --user start caddy.service
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Home Assistant & Music Assistant
-    
-
+# Owntone
+    sudo touch /etc/containers/systemd/owntone.container
+    sudo mkdir -p /etc/owntone/{etc,media,cache}
+    sudo chmod -R 777 /etc/owntone/cache
+    sudo systemctl daemon-reload
+    sudo systemctl start owntone.service
+    # sudo systemctl status owntone.service
+    # sudo journalctl -u owntone -f
+    # http://192.168.50.20:3689/#/
 
 # Firewalld
     sudo apt install -y firewalld
