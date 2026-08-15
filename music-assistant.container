@@ -1,0 +1,21 @@
+[Unit]
+Description=Music Assistant container
+Requires=network-online.target
+After=network-online.target
+
+[Container]
+Image=ghcr.io/music-assistant/server:latest
+ContainerName=music-assistant
+Environment=LOG_LEVEL=info
+Volume=/etc/music-assistant/data:/data:Z
+Volume=/home/masonp/music:/media:ro,z
+AutoUpdate=registry
+Network=host
+AddDevice=-/dev/snd
+
+[Service]
+Restart=always
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
