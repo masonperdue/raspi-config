@@ -123,16 +123,6 @@
     systemctl --user start caddy.service
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Librespot
-    sudo usermod -aG audio masonp
-    mkdir -p ~/.volumes/librespot
-    aplay -L | grep -E '^hw:|^plughw:|^sysdefault:'
-    touch ~/.config/containers/systemd/{librespot.container,librespot.build,Containerfile}
-    systemctl --user daemon-reload
-    systemctl --user start librespot-build.service
-    systemctl --user start librespot.service
-    # systemctl status librespot.service
-
 # Firewalld
     sudo apt install -y firewalld
     sudo systemctl status firewalld.service
