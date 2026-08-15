@@ -24,6 +24,7 @@
         sudo apt full-upgrade -y
         sudo apt autoremove --purge -y
         sudo raspi-config
+            # enable sudo password
             # change locale to us
             # expand filesystem
             # update
@@ -124,7 +125,14 @@
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
 
 # Lyrion Music Server
-    
+    touch ~/.config/containers/systemd/lms.container
+    mkdir ~/music
+    mkdir ~/.volumes/lms/{config,playlist}
+    sudo usermod -aG audio masonp
+    systemctl --user daemon-reload
+    systemctl --user start lms.service
+    journalctl --user -u lms.service -f
+    # http://192.168.50.20:9000
 
 # Firewalld
     sudo apt install -y firewalld

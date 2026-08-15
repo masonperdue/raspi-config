@@ -1,0 +1,20 @@
+[Unit]
+Description=LMS container
+
+[Container]
+Image=docker.io/lmscommunity/lyrionmusicserver:latest
+ContainerName=lms
+Volume=/home/masonp/.volumes/lms/config:/config:rw,Z
+Volume=/home/masonp/music:/music:ro,z
+Volume=/home/masonp/.volumes/lms/playlist:/playlist:rw,Z
+Volume=/etc/localtime:/etc/localtime:ro,Z
+Volume=/etc/timezone:/etc/timezone:ro,Z
+Network=host
+AddDevice=-/dev/snd
+
+[Service]
+Restart=always
+RestartSec=1s
+
+[Install]
+WantedBy=default.target
