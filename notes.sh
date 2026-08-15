@@ -123,15 +123,13 @@
     systemctl --user start caddy.service
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Owntone
-    sudo touch /etc/containers/systemd/owntone.container
-    sudo mkdir -p /etc/owntone/{etc,media,cache}
-    sudo chmod -R 777 /etc/owntone/cache
+# Music Assistant
+    sudo touch /etc/containers/systemd/music-assistant.container
+    sudo mkdir -p /etc/music-assistant/data
+    mkdir ~/music
     sudo systemctl daemon-reload
-    sudo systemctl start owntone.service
-    # sudo systemctl status owntone.service
-    # sudo journalctl -u owntone -f
-    # http://192.168.50.20:3689/#/
+    sudo systemctl start music-assistant.service
+    # http://192.168.50.20:8095
 
 # Firewalld
     sudo apt install -y firewalld
