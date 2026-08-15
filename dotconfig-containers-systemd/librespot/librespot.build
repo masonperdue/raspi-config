@@ -1,0 +1,5 @@
+[Build]
+ImageTag=localhost/librespot:latest
+SetWorkingDirectory=/home/masonp/.config/containers/systemd/librespot
+File=Containerfile
+Pull=newer

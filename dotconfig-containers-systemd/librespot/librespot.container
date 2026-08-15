@@ -1,0 +1,15 @@
+[Unit]
+Description=Librespot Container
+
+[Container]
+ContainerName=librespot
+Image=localhost/librespot:latest
+Network=host
+AddDevice=-/dev/snd
+Volume=/home/masonp/.volumes/librespot:/var/cache/librespot:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,28 @@
+FROM debian:latest AS builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cargo \
+    libasound2-dev \
+    git \
+    ca-certificates \
+    openssl \
+    pkg-config \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+RUN git clone https://github.com/librespot-org/librespot.git .
+RUN cargo build --release
+
+FROM debian:latest
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libasound2 \
+    alsa-utils \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /build/target/release/librespot /usr/local/bin/librespot
+
+WORKDIR /var/cache/librespot
+
+CMD ["librespot", "-c", "/var/cache/librespot", "-n", "Receiver", "--device-type", "avr", "-b", "320", "--backend", "alsa", "--enable-volume-normalisation", "--device", "plughw:CARD=Audio,DEV=0"]

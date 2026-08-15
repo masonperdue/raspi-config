@@ -123,18 +123,15 @@
     systemctl --user start caddy.service
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Librespot + Owntone
+# Librespot
     sudo usermod -aG audio masonp
-    mkdir -p ~/.volumes/owntone/{etc,media,cache,cache/librespot}
-    mkfifo ~/.volumes/owntone/media/spotify_pipe
-    podman unshare chown -R 1000:1000 ~/.volumes/owntone/cache
-    podman unshare chown -R 1000:1000 ~/.volumes/owntone/etc
-    touch ~/.config/containers/systemd/{owntone,librespot}.container
+    mkdir -p ~/.volumes/librespot
+    aplay -L | grep -E '^hw:|^plughw:|^sysdefault:'
+    touch ~/.config/containers/systemd/{librespot.container,librespot.build,Containerfile}
     systemctl --user daemon-reload
-    systemctl --user start owntone.service librespot.service
-    # systemctl status owntone.service
+    systemctl --user start librespot-build.service
+    systemctl --user start librespot.service
     # systemctl status librespot.service
-    # http://192.168.50.20:3689/#/
 
 # Firewalld
     sudo apt install -y firewalld
