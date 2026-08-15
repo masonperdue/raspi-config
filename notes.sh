@@ -39,9 +39,8 @@
             # change to "X11Forwarding no"
             # add "AllowUsers masonp"
         # sudo systemctl list-units --type=service
-        sudo systemctl disable --now bluetooth.service
-        sudo systemctl mask bluetooth.service
-        sudo systemctl mask avahi-daemon.socket
+        sudo systemctl disable --now {{avahi-daemon,bluetooth}.service,avahi-daemon.socket}
+        sudo systemctl mask {bluetooth.service,avahi-daemon.socket}
         sudo rm /etc/motd         
         sudo reboot now
     # ssh raspi
@@ -127,7 +126,7 @@
     sudo apt install -y firewalld
     sudo systemctl status firewalld.service
     sudo firewall-cmd --set-default-zone drop
-    sudo firewall-cmd --zone=drop --add-port=7583/tcp --add-port=53/tcp --add-port=53/udp # --add-port=80/tcp --add-port-443/tcp
+    sudo firewall-cmd --zone=drop --add-port=7583/tcp --add-port=53/tcp --add-port=53/udp --add-port=80/tcp --add-port-443/tcp
     sudo firewall-cmd --runtime-to-permanent
     sudo firewall-cmd --state
     sudo firewall-cmd --get-default-zone

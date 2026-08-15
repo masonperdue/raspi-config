@@ -54,6 +54,8 @@ caching:
     maxItemsCount: 0
     prefetching: true
 
+# Add prometheus later
+
 rebindingProtection:
     enable: true
 
