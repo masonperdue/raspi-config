@@ -1,0 +1,25 @@
+[Unit]
+Description=Librespot Container
+After=owntone.service
+Wants=owntone.service
+
+[Container]
+ContainerName=librespot
+Image=docker.io/giof71/librespot:latest
+AutoUpdate=registry
+Network=host
+Volume=/home/masonp/.volumes/owntone/media:/srv/media:Z
+Volume=/home/masonp/.volumes/owntone/cache/librespot:/var/cache/librespot:Z
+Environment=DEVICE_NAME=Raspi
+Environment=BACKEND=pipe
+Environment=DEVICE=/srv/media/spotify_pipe
+Environment=BITRATE=320
+Environment=FORMAT=S16
+Environment=ENABLE_CACHE=Y
+Environment=ENABLE_SYSTEM_CACHE=Y
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

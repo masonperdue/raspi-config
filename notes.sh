@@ -39,9 +39,8 @@
             # change to "X11Forwarding no"
             # add "AllowUsers masonp"
         # sudo systemctl list-units --type=service
-        sudo systemctl disable --now {bluetooth,avahi-daemon}.service
-        sudo systemctl disable --now avahi-daemon.socket
-        sudo systemctl mask {bluetooth,avahi-daemon}.service
+        sudo systemctl disable --now bluetooth.service
+        sudo systemctl mask bluetooth.service
         sudo systemctl mask avahi-daemon.socket
         sudo rm /etc/motd         
         sudo reboot now
@@ -124,15 +123,18 @@
     systemctl --user start caddy.service
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Lyrion Music Server
-    touch ~/.config/containers/systemd/lms.container
-    mkdir ~/music
-    mkdir ~/.volumes/lms/{config,playlist}
+# Librespot + Owntone
     sudo usermod -aG audio masonp
+    mkdir -p ~/.volumes/owntone/{etc,media,cache,cache/librespot}
+    mkfifo ~/.volumes/owntone/media/spotify_pipe
+    podman unshare chown -R 1000:1000 ~/.volumes/owntone/cache
+    podman unshare chown -R 1000:1000 ~/.volumes/owntone/etc
+    touch ~/.config/containers/systemd/{owntone,librespot}.container
     systemctl --user daemon-reload
-    systemctl --user start lms.service
-    journalctl --user -u lms.service -f
-    # http://192.168.50.20:9000
+    systemctl --user start owntone.service librespot.service
+    # systemctl status owntone.service
+    # systemctl status librespot.service
+    # http://192.168.50.20:3689/#/
 
 # Firewalld
     sudo apt install -y firewalld
