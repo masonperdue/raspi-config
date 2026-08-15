@@ -123,13 +123,8 @@
     systemctl --user start caddy.service
     # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Music Assistant
-    sudo touch /etc/containers/systemd/music-assistant.container
-    sudo mkdir -p /etc/music-assistant/data
-    mkdir ~/music
-    sudo systemctl daemon-reload
-    sudo systemctl start music-assistant.service
-    # http://192.168.50.20:8095
+# Lyrion Music Server
+    
 
 # Firewalld
     sudo apt install -y firewalld
