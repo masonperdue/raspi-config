@@ -40,7 +40,7 @@ alias trea='tree -alC --dirsfirst'
 updateRaspi(){
         echo ""
         echo "Updating Packages"
-        sudo apt update -y
+        sudo apt update
         sudo apt full-upgrade -y
         sudo apt autoremove -y --purge
         sudo apt autoclean
