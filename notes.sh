@@ -63,15 +63,13 @@
     dig startpage.com
 
 # Blocky & Unbound
-    sudo apt install -y podman
-    sudo touch /etc/containers/systemd/{{blocky,unbound}.container,Containerfile,unbound.build,unbound.conf}
-    sudo touch /etc/blocky/{config.yml,allowlist.txt,blocklist.txt}
     sudo ss -tuln
+    sudo apt install -y podman
+    sudo cp -R ~/raspi-config/etc-containers-systemd/* /etc/containers/systemd/
+    sudo cp -R ~/raspi-config/etc-blocky/* /etc/blocky/
     sudo systemctl daemon-reload
-    sudo systemctl start unbound-build.service
-    sudo podman image list --all
-    sudo systemctl start unbound.service blocky.service
     sudo systemctl enable --now podman-auto-update.timer
+    sudo systemctl start blocky.service
     # Testing
         sudo systemctl status unbound.service
         sudo systemctl status blocky.service
@@ -93,7 +91,8 @@
     sudo firewall-cmd --set-default-zone drop
     sudo firewall-cmd --zone=drop --add-port=7583/tcp --add-port=53/tcp --add-port=53/udp
     sudo firewall-cmd --runtime-to-permanent
-    sudo firewall-cmd --state
-    sudo firewall-cmd --get-default-zone
-    sudo firewall-cmd --get-active-zones
-    sudo firewall-cmd --list-all
+    # Testing
+        sudo firewall-cmd --state
+        sudo firewall-cmd --get-default-zone
+        sudo firewall-cmd --get-active-zones
+        sudo firewall-cmd --list-all
