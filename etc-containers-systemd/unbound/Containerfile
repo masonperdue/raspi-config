@@ -21,4 +21,4 @@ RUN chown -R unbound:unbound /etc/unbound /var/lib/unbound
 
 EXPOSE 5335/udp 5335/tcp
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["unbound"]
