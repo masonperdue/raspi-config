@@ -80,3 +80,31 @@ docScan(){
                 echo "Error: Input file name"
         fi
 }
+
+# Git commands
+gitClone(){
+    if [ -n "$1" ]; then
+        git clone git@github.com:masonperdue/"$1".git
+    else
+        echo "Error: Input Repository Name"
+    fi
+}
+
+gitPush(){
+        if [ -n "$1" ]; then
+                git add --all
+                git commit -m "$1"
+                git push origin main
+        else
+                echo "Error: Input Commit Message"
+        fi
+}
+
+gitCommit(){
+        if [ -n "$1" ]; then
+                git add --all
+                git commit -m "$1"
+        else
+                echo "Error: Input Commit Message"
+        fi
+}

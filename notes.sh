@@ -38,11 +38,23 @@
         sudo apt install -y git neovim tree sane-utils nmap unattended-upgrades dnsutils imagemagick
         sudo dpkg-reconfigure unattended-upgrades
             # yes
+	git config --global user.name masonperdue
+	git config --global user.email 220426478+masonperdue@users.noreply.github.com
+	git config --global core.editor nvim
+	git config --global init.defaultBranch main
+	git config --global commit.gpgSign true
+    git config --global tag.gpgSign true
+	git config --global gpg.format ssh
+    vi ~/.ssh/id_ed25519-GitHub.pub
+    chmod 600 ~/.ssh/id_ed25519-GitHub.pub
+    git config --global user.signingkey ~/.ssh/id_ed25519-GitHub.pub
+	mkdir ~/.myconfig
+	cd ~/.myconfig
         git clone git@github.com:masonperdue/raspi-config.git
         cd raspi-config
         echo "" >> /home/masonp/.bashrc
-        echo ". /home/masonp/raspi-config/mybashrc" >> /home/masonp/.bashrc
-        cd
+        echo ". /home/masonp/.myconfig/raspi-config/mybashrc" >> /home/masonp/.bashrc
+        cd ~/.myconfig
         git clone git@github.com:masonperdue/neovim-config.git
         cd neovim-config
         ./setup.sh
