@@ -74,8 +74,9 @@
 # Blocky & Unbound
     sudo ss -tuln
     sudo apt install -y podman
-    sudo cp -R ~/raspi-config/etc-containers-systemd/* /etc/containers/systemd/
-    sudo cp -R ~/raspi-config/etc-blocky/* /etc/blocky/
+    sudo cp -R ~/.myconfig/raspi-config/etc-containers-systemd/* /etc/containers/systemd/
+    sudo mkdir /etc/blocky
+    sudo cp -R ~/.myconfig/raspi-config/etc-blocky/* /etc/blocky/
     sudo systemctl daemon-reload
     sudo systemctl enable --now podman-auto-update.timer
     sudo systemctl start blocky.service
@@ -83,14 +84,17 @@
         sudo systemctl status unbound.service
         sudo systemctl status blocky.service
         sudo podman container list
+        ss -tuln
+        sudo journalctl -exfu blocky.service
         dig @127.0.0.1 -p 5335 google.com +short
         dig @127.0.0.1 -p 53 google.com +short
+        dig @127.0.0.1 -p 5335 doubleclick.net +short
         dig @127.0.0.1 -p 53 doubleclick.net +short
         dig @127.0.0.1 -p 5335 cloudflare.com +dnssec
-        dig @127.0.0.1 -p 5335 dnssec-failed.org
-        dig @127.0.0.1 -p 5335 dnssec-failed.org +cd
         dig @127.0.0.1 -p 53 cloudflare.com +dnssec
+        dig @127.0.0.1 -p 5335 dnssec-failed.org
         dig @127.0.0.1 -p 53 dnssec-failed.org
+        dig @127.0.0.1 -p 5335 dnssec-failed.org +cd
         dig @127.0.0.1 -p 53 dnssec-failed.org +cd
     sudo reboot now
 
