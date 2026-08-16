@@ -1,0 +1,6 @@
+[Unit]
+
+[Build]
+ImageTag=caddy
+File=Containerfile
+Pull=newer

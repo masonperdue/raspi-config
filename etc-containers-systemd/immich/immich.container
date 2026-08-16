@@ -6,15 +6,14 @@ Requires=immich-db.service immich-redis.service immich-ml.service
 [Container]
 ContainerName=immich
 Image=ghcr.io/immich-app/immich-server:release
-Network=lan.network
-PublishPort=2283:2283
+Network=host
 Environment=DB_HOSTNAME=immich-db
 Environment=DB_USERNAME=immich
 Environment=DB_PASSWORD=
 Environment=DB_DATABASE_NAME=immich
 Environment=REDIS_HOSTNAME=immich-redis
 Environment=IMMICH_MACHINE_LEARNING_URL=http://immich-ml:3003
-Volume=/home/masonp/.volumes/immich/photos:/data:Z
+Volume=/etc/immich/photos:/data:Z
 Volume=/etc/localtime:/etc/localtime:ro
 AutoUpdate=registry
 
@@ -22,4 +21,4 @@ AutoUpdate=registry
 Restart=always
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

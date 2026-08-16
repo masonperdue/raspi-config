@@ -1,0 +1,18 @@
+[Unit]
+Description=Prometheus Node Exporter Container
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=quay.io/prometheus/node-exporter:latest
+ContainerName=node-exporter
+Network=host
+PodmanArgs=--pid=host
+Volume=/:/host/root:ro,rslave
+Exec=--path.rootfs=/host/root
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

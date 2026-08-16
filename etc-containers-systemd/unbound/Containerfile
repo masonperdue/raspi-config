@@ -1,17 +1,32 @@
-FROM debian:latest
+# --- Stage 1: Build Exporter ---
+FROM golang:latest AS builder
+RUN go install github.com/letsencrypt/unbound_exporter@latest
 
-RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+# --- Stage 2: Runtime Image ---
+FROM debian:stable-slim
+
 ENV LANG en_US.utf8
 
-RUN apt-get update && apt-get install -y unbound unbound-anchor unbound-host dns-root-data
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    locales \
+    unbound \
+    unbound-anchor \
+    unbound-host \
+    dns-root-data \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/lib/unbound && cp /usr/share/dns/root.key /var/lib/unbound/root.key 
+# Copy exporter binary from builder stage
+COPY --from=builder /go/bin/unbound_exporter /usr/local/bin/unbound_exporter
+
+RUN mkdir -p /var/lib/unbound && cp /usr/share/dns/root.key /var/lib/unbound/root.key
 
 COPY unbound.conf /etc/unbound/unbound.conf
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 RUN chown -R unbound:unbound /etc/unbound /var/lib/unbound
 
-EXPOSE 5335/udp 5335/tcp
+EXPOSE 5335/udp 5335/tcp 9167/tcp
 
-CMD ["unbound", "-d"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

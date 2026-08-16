@@ -9,12 +9,12 @@ home.masonperdue.com, *.home.masonperdue.com {
 
     @immich host immich.home.masonperdue.com
     handle @immich {
-        reverse_proxy host.containers.internal:2283
+        reverse_proxy 127.0.0.1:2283
     }
 
-    @owntone host owntone.home.masonperdue.com
-    handle @owntone {
-        reverse_proxy host.containers.internal:3689
+    @grafana host grafana.home.masonperdue.com
+    handle @grafana {
+        reverse_proxy 127.0.0.1:3000
     }
 
     handle {

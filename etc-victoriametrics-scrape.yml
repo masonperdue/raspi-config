@@ -1,0 +1,20 @@
+# /etc/victoriametrics/scrape.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'blocky'
+    static_configs:
+      - targets: ['127.0.0.1:4000']
+
+  - job_name: 'unbound'
+    static_configs:
+      - targets: ['127.0.0.1:9167']
+
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['127.0.0.1:9100']
+
+  - job_name: 'victoriametrics'
+    static_configs:
+      - targets: ['127.0.0.1:8428']

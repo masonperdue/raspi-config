@@ -75,6 +75,8 @@
     # sudo podman image list --all
     sudo systemctl start unbound.service blocky.service
     sudo systemctl enable --now podman-auto-update.timer
+    # curl http://127.0.0.1:4000/api/blocking/status
+    # curl http://127.0.0.1:9167/metrics
     # sudo podman container list
     # dig @127.0.0.1 -p 5335 google.com +short
     # dig @127.0.0.1 -p 53 google.com +short
@@ -111,16 +113,35 @@
     # adb shell cmd appops set nl.giejay.android.tv.immich RUN_IN_BACKGROUND allow
 
 # Caddy
-    touch ~/.config/containers/systemd/{caddy/caddy.container,caddy/Containerfile,caddy/caddy.build,lan.network}
-    mkdir ~/.volumes/caddy/{site,data,config}
-    touch ~/.volumes/caddy/Caddyfile
-    sudo sysctl -w net.ipv4.ip_unprivileged_port_start=80
-    sudoedit /etc/sysctl.d/99-podman.conf
-        # Add: net.ipv4.ip_unprivileged_port_start=80
-    systemctl --user daemon-reload
-    systemctl 
-    systemctl --user start caddy.service
-    # podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
+    touch etc/containers/systemd/caddy/{caddy.container,Containerfile,caddy.build}
+    mkdir /etc/caddy/{site,data,config}
+    touch /etc/volumes/caddy/Caddyfile
+    sudo systemctl daemon-reload
+    sudo systemctl start caddy.service
+    # sudo podman exec -it caddy caddy reload --config /etc/caddy/Caddyfile
+
+# Monitoring
+    sudo touch /etc/containers/systemd/node-exporter.container
+    sudo systemctl daemon-reload
+    sudo systemctl start node-exporter.service
+    sudo systemctl status node-exporter.service
+    # curl http://127.0.0.1:9100/metrics | grep node_cpu_seconds_total
+    sudo mkdir /etc/victoriametrics
+    sudo touch /etc/victoriametrics/scrape.yml
+    sudo mkdir /etc/containers/systemd/victoriametrics
+    sudo touch /etc/containers/systemd/victoriametrics/victoriametrics{-data.volume,.container}
+    sudo systemctl daemon-reload
+    sudo systemctl start victoriametrics.service
+    sudo systemctl status victoriametrics.service
+    sudo mkdir -p /etc/grafana/provisioning/datasources
+    sudo mkdir /etc/containers/systemd/grafana
+    sudo touch /etc/containers/systemd/grafana/{grafana.container,grafana-data.volume}
+    sudo systemctl daemon-reload
+    sudo systemctl grafana.service
+    sudo systemctl status frafana.service
+    # grafana.home.masonperdue.com
+    
+
 
 # Firewalld
     sudo apt install -y firewalld

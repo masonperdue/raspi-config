@@ -1,0 +1,5 @@
+[Unit]
+Description=VictoriaMetrics TSDB Data Volume
+
+[Volume]
+VolumeName=victoriametrics-data
