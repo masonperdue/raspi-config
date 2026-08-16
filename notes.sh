@@ -12,7 +12,7 @@
     # SSH w/ Pubkey Auth
     # MAC IP Binded in Router to 192.168.50.20
     # ssh masonp@192.168.50.20
-        sudo apt update -y
+        sudo apt update
         sudo apt full-upgrade -y
         sudo apt autoremove --purge -y
         sudo raspi-config
