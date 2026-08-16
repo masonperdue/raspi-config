@@ -1,5 +1,4 @@
 [Build]
-ImageTag=unbound
-SetWorkingDirectory=/etc/containers/systemd/unbound/
+ImageTag=localhost/unbound:latest
 File=Containerfile
 Pull=newer
