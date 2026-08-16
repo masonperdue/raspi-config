@@ -47,10 +47,10 @@ updateRaspi(){
         echo ""
         
         echo "Sourcing ~/.bashrc"
-        cd ~/raspi-config
+        cd ~/.myconfig/raspi-config
         git pull
         source ~/.bashrc
-        cd
+        cd -
 
         echo ""
 }
