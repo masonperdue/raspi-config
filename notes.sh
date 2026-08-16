@@ -34,7 +34,7 @@
         sudo systemctl mask {bluetooth.service,avahi-daemon.socket}
         sudo rm /etc/motd         
         sudo reboot now
-    # ssh raspi
+    # ssh -A raspi
         sudo apt install -y git neovim tree sane-utils nmap unattended-upgrades dnsutils imagemagick
         sudo dpkg-reconfigure unattended-upgrades
             # yes
