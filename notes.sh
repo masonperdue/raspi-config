@@ -63,10 +63,10 @@
         sudo usermod -aG scanner masonp
 
 # Set raspi dns to cloudflare (so server can update w/o servers running)
-    nmcli connection show
-    sudo nmcli con mod netplan-eth0 ipv4.dns 1.1.1.1
-    sudo nmcli con mod netplan-eth0 ipv4.ignore-auto-dns yes
-    sudo nmcli con up netplan-eth0
+    nmcli con show
+    sudo nmcli con mod [UUID] ipv4.dns 1.1.1.1
+    sudo nmcli con mod [UUID] ipv4.ignore-auto-dns yes
+    sudo nmcli con up [UUID]
     sudo nmcli radio wifi off
     nmcli dev show
     dig startpage.com
