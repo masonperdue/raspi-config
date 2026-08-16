@@ -31,7 +31,7 @@
             # change to "X11Forwarding no"
             # add "AllowUsers masonp"
         sudo systemctl disable --now {{avahi-daemon,bluetooth}.service,avahi-daemon.socket}
-        sudo systemctl mask {bluetooth.service,avahi-daemon.socket}
+        sudo systemctl mask {{avahi-daemon,bluetooth}.service,avahi-daemon.socket}
         sudo rm /etc/motd         
         sudo reboot now
     # ssh -A raspi
