@@ -58,7 +58,7 @@
     sudo nmcli con mod netplan-eth0 ipv4.dns 1.1.1.1
     sudo nmcli con mod netplan-eth0 ipv4.ignore-auto-dns yes
     sudo nmcli con up netplan-eth0
-    # sudo nmcli radio wifi off (if needed)
+    sudo nmcli radio wifi off
     nmcli dev show
     dig startpage.com
 
