@@ -14,8 +14,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /var/lib/unbound && cp /usr/share/dns/root.key /var/lib/unbound/root.key
 
 COPY unbound.conf /etc/unbound/unbound.conf
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
 
 RUN chown -R unbound:unbound /etc/unbound /var/lib/unbound
 
