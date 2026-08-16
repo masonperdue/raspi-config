@@ -1,2 +1,2 @@
 # raspi-config
-Raspberry Pi 5 Configuration for Blocky and Unbound + Immich + Caddy
+Raspberry Pi 5 Configuration for Blocky and Unbound
