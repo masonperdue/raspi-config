@@ -10,11 +10,8 @@
     # No WiFi
     # Username: masonp
     # SSH w/ Pubkey Auth
-        ssh-keygen -t ed25519 -C "[email]"
-            # id_ed25519-raspi
-            # passphrase
     # MAC IP Binded in Router to 192.168.50.20
-    # ssh masonp@192.168.50.20 -i ~/.ssh/id_ed25519-raspi
+    # ssh masonp@192.168.50.20
         sudo apt update -y
         sudo apt full-upgrade -y
         sudo apt autoremove --purge -y
@@ -24,7 +21,7 @@
             # expand filesystem
             # update
         sudo reboot now
-    # ssh masonp@192.168.50.20 -i ~/.ssh/id_ed25519-Raspi
+    # ssh masonp@192.168.50.20
         sudoedit /etc/ssh/sshd_config
             # change to "Port 7583"
             # change to "PermitRootLogin no"
