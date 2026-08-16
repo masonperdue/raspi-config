@@ -43,7 +43,13 @@
             # yes
         git clone git@github.com:masonperdue/raspi-config.git
         cd raspi-config
+        echo "" >> /home/masonp/.bashrc
+        echo ". /home/masonp/raspi-config/mybashrc" >> /home/masonp/.bashrc
+        cd
+        git clone git@github.com:masonperdue/neovim-config.git
+        cd neovim-config
         ./setup.sh
+        cd
         source ~/.bashrc
         sudo usermod -aG scanner masonp
 
