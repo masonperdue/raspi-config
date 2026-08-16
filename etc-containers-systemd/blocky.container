@@ -2,15 +2,14 @@
 Description=Blocky container
 Requires=unbound.service
 After=unbound.service
-DefaultDependencies=false
 
 [Container]
 Image=ghcr.io/0xerr0r/blocky:main
 ContainerName=blocky
 Environment=TZ=America/Los_Angeles
-Volume=/etc/blocky/config.yml:/app/config.yml:ro
-Volume=/etc/blocky/allowlist.txt:/app/allowlists/allowlist.txt
-Volume=/etc/blocky/blocklist.txt:/app/denylists/blocklist.txt
+Volume=/etc/blocky/config.yml:/app/config.yml:ro,Z
+Volume=/etc/blocky/allowlist.txt:/app/allowlists/allowlist.txt:ro,Z
+Volume=/etc/blocky/blocklist.txt:/app/denylists/blocklist.txt:ro,Z
 AutoUpdate=registry
 Network=host
 
