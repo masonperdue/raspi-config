@@ -1,4 +1,0 @@
-[Build]
-ImageTag=localhost/unbound:latest
-File=Containerfile
-Pull=newer
