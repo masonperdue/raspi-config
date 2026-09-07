@@ -7,9 +7,10 @@ After=unbound.service
 Image=ghcr.io/0xerr0r/blocky:main
 ContainerName=blocky
 Environment=TZ=America/Los_Angeles
-Volume=/etc/blocky/config.yml:/app/config.yml:ro,Z
-Volume=/etc/blocky/allowlist.txt:/app/allowlists/allowlist.txt:ro,Z
-Volume=/etc/blocky/blocklist.txt:/app/denylists/blocklist.txt:ro,Z
+Volume=%h/.config/blocky/config.yml:/app/config.yml:ro
+Volume=%h/.config/blocky/allowlist.txt:/app/allowlists/allowlist.txt:ro
+Volume=%h/.config/blocky/blocklist.txt:/app/denylists/blocklist.txt:ro
+Volume=%h/.config/blocky/cache:/app/cache
 AutoUpdate=registry
 Network=host
 
@@ -18,4 +19,4 @@ Restart=always
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
