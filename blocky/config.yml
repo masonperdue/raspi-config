@@ -15,7 +15,7 @@ blocking:
             - /app/denylists/blocklist.txt
             - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
             - https://v.firebog.net/hosts/lists.php?type=tick
-            - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/doh-vpn-proxy-bypass.txt
+            - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/doh.txt
             - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/nosafesearch.txt
     allowlists:
         ads:
