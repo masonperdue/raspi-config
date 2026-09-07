@@ -38,6 +38,8 @@
         sudo apt install -y git tree sane-utils nmap unattended-upgrades dnsutils imagemagick
         sudo dpkg-reconfigure unattended-upgrades
             # yes
+		vi ~/.ssh/id_ed25519-GitHub.pub
+        chmod 600 ~/.ssh/id_ed25519-GitHub.pub
 	    git config --global user.name masonperdue
         git config --global user.email 220426478+masonperdue@users.noreply.github.com
         git config --global core.editor nvim
@@ -45,21 +47,17 @@
         git config --global commit.gpgSign true
         git config --global tag.gpgSign true
         git config --global gpg.format ssh
-        vi ~/.ssh/id_ed25519-GitHub.pub
-        chmod 600 ~/.ssh/id_ed25519-GitHub.pub
         git config --global user.signingkey ~/.ssh/id_ed25519-GitHub.pub
-        mkdir ~/.myconfig
-        cd ~/.myconfig
+		cd
         git clone git@github.com:masonperdue/raspi-config.git
         cd raspi-config
         echo "" >> /home/masonp/.bashrc
         echo ". /home/masonp/.myconfig/raspi-config/mybashrc" >> /home/masonp/.bashrc
         source ~/.bashrc
-        cd ~/.myconfig
+		cd
         git clone git@github.com:masonperdue/neovim-config.git
         cd neovim-config
         ./setup.sh
-        cd
         sudo usermod -aG scanner masonp
 
 # Set raspi dns to cloudflare (so server can update w/o servers running)
@@ -72,30 +70,61 @@
     dig startpage.com
 
 # Blocky & Unbound
-    sudo ss -tuln
-    sudo apt install -y podman
-    sudo cp -R ~/.myconfig/raspi-config/etc-containers-systemd/* /etc/containers/systemd/
-    sudo mkdir /etc/blocky
-    sudo cp -R ~/.myconfig/raspi-config/etc-blocky/* /etc/blocky/
-    sudo systemctl daemon-reload
-    sudo systemctl enable --now podman-auto-update.timer
-    sudo systemctl start blocky.service
+	sudo ss -tuln
+	sudo apt install -y podman
+	echo "net.ipv4.ip_unprivileged_port_start=53" | sudo tee /etc/sysctl.d/99-rootless-dns.conf
+	sudo sysctl --system
+	sudo loginctl enable-linger masonp
+	mkdir ~/.config/{containers/systemd,blocky/cache,unbound/lib}
+	cp ~/raspi-config/containers-systemd/* ~/.config/containers/systemd/
+	cp ~/raspi-config/blocky/* ~/.config/blocky/
+	chmod 777 ~/.config/unbound/lib
+	systemctl --user daemon-reload
+	systemctl --user enable --now podman-auto-update.timer
+	systemctl --user enable --now blocky.service
     # Testing
-        sudo systemctl status unbound.service
-        sudo systemctl status blocky.service
-        sudo podman container list
+        systemctl status unbound.service
+        systemctl status blocky.service
+        podman container list
         ss -tuln
-        sudo journalctl -exfu blocky.service
+        journalctl --user -exfu blocky.service
         dig @127.0.0.1 -p 5335 google.com +short
-        dig @127.0.0.1 -p 53 google.com +short
+        dig @127.0.0.1 google.com +short
         dig @127.0.0.1 -p 5335 doubleclick.net +short
-        dig @127.0.0.1 -p 53 doubleclick.net +short
+        dig @127.0.0.1 doubleclick.net +short
         dig @127.0.0.1 -p 5335 cloudflare.com +dnssec
-        dig @127.0.0.1 -p 53 cloudflare.com +dnssec
+        dig @127.0.0.1 cloudflare.com +dnssec
         dig @127.0.0.1 -p 5335 dnssec-failed.org
-        dig @127.0.0.1 -p 53 dnssec-failed.org
+        dig @127.0.0.1 dnssec-failed.org
         dig @127.0.0.1 -p 5335 dnssec-failed.org +cd
-        dig @127.0.0.1 -p 53 dnssec-failed.org +cd
+        dig @127.0.0.1 dnssec-failed.org +cd
+		dig @127.0.0.1 www.google.com
+		dig @127.0.0.1 www.youtube.com
+		dig @127.0.0.1 dns.google
+		dig @127.0.0.1 use-application-dns.net
+	sudoedit /etc/systemd/journald.conf
+		# SystemMaxUse=200M
+	sudo systemctl restart systemd-journald
+	mkdir -p ~/.config/systemd/user
+    vi ~/.config/systemd/user/podman-image-prune.service
+		# [Unit]
+		# Description=Prune unused podman images
+		
+		# [Service]
+		# Type=oneshot
+		# ExecStart=/usr/bin/podman image prune -f
+	vi ~/.config/systemd/user/podman-image-prune.timer
+		# [Unit]
+		# Description=Weekly podman image prune
+		
+		# [Timer]
+		# OnCalendar=weekly
+		# Persistent=true
+		
+		# [Install]
+		# WantedBy=timers.target
+	systemctl --user daemon-reload
+    systemctl --user enable --now podman-image-prune.timer
     sudo reboot now
 
 # Firewalld
