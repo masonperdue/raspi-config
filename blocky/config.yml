@@ -47,8 +47,6 @@ customDNS:
         www 3600 CNAME forcesafesearch.google.com.
         $ORIGIN bing.com.
         www 3600 CNAME strict.bing.com.
-        $ORIGIN duckduckgo.com.
-        @   3600 CNAME safe.duckduckgo.com.
         $ORIGIN youtube.com.
         www 3600 CNAME restrictmoderate.youtube.com.
         m   3600 CNAME restrictmoderate.youtube.com.
