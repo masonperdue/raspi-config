@@ -64,7 +64,7 @@
 
 # Set raspi dns to cloudflare (so server can update w/o servers running)
     nmcli con show
-    sudo nmcli con mod [UUID] ipv4.dns 1.1.1.1
+    sudo nmcli con mod [UUID] ipv4.dns 1.1.1.3
     sudo nmcli con mod [UUID] ipv4.ignore-auto-dns yes
     sudo nmcli con up [UUID]
     sudo nmcli radio wifi off
