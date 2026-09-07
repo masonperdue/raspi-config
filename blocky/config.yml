@@ -44,7 +44,6 @@ customDNS:
     customTTL: 1h
     zone: |
         $ORIGIN google.com.
-        @   3600 CNAME forcesafesearch.google.com.
         www 3600 CNAME forcesafesearch.google.com.
         $ORIGIN bing.com.
         www 3600 CNAME strict.bing.com.
