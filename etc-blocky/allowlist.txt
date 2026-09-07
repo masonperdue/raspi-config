@@ -14,7 +14,6 @@ tinyurl.com
 cdn.optimizely.com
 split.io
 s.shopify.com
-# Google & Android Services
 clients4.google.com
 clients2.google.com
 s.youtube.com
@@ -96,3 +95,13 @@ apresolve.spotify.com
 api-tv.spotify.com
 www.google-analytics.com
 ssl.google-analytics.com
+/(.*\.)?googleapis\.com$/
+/(.*\.)?gstatic\.com$/
+accounts.google.com
+play.google.com
+/(.*\.)?alarmnet\.com$/
+/(.*\.)?honeywellhome\.com$/
+/(.*\.)?honeywell\.com$/
+/(.*\.)?tplinkcloud\.com$/
+/(.*\.)?tplinknbu\.com$/
+tp-link.com
