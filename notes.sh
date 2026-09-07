@@ -34,6 +34,7 @@
         sudo systemctl mask {{avahi-daemon,bluetooth}.service,avahi-daemon.socket}
         sudo rm /etc/motd         
         sudo reboot now
+	# Remove-Item C:\\Users\\perdu/.ssh/known_hosts*
     # ssh -A raspi
 		sudo apt remove --purge -y vim-common vim-tiny
 		sudo apt autoremove --purge -y
