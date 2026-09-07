@@ -90,7 +90,8 @@
         systemctl status blocky.service
         podman container list
         ss -tuln
-        journalctl --user -exfu blocky.service
+        podman logs unbound
+        podman logs -f blocky
         dig @127.0.0.1 -p 5335 google.com +short
         dig @127.0.0.1 google.com +short
         dig @127.0.0.1 -p 5335 doubleclick.net +short
