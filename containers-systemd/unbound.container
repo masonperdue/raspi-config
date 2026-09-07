@@ -1,7 +1,6 @@
 [Unit]
 Description=Unbound container
-Requires=network-online.target
-After=network-online.target unbound-build.service
+After=unbound-build.service
 Wants=unbound-build.service
 
 [Container]
