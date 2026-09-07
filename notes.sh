@@ -85,7 +85,7 @@
 	chmod 777 ~/.config/unbound/lib
 	systemctl --user daemon-reload
 	systemctl --user enable --now podman-auto-update.timer
-	systemctl --user enable --now blocky.service
+	systemctl --user enable --now unbound.service blocky.service
     # Testing
         systemctl status unbound.service
         systemctl status blocky.service
