@@ -9,6 +9,7 @@ Image=unbound.build
 ContainerName=unbound
 Network=host
 AutoUpdate=registry
+Volume=%h/.config/unbound/lib:/var/lib/unbound
 
 [Service]
 ExecStartPre=timeout 60s sh -c 'until ping -c1 192.168.50.1; do sleep 1; done;'
@@ -16,4 +17,4 @@ Restart=always
 RestartSec=1s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
