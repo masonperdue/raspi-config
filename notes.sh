@@ -35,7 +35,9 @@
         sudo rm /etc/motd         
         sudo reboot now
     # ssh -A raspi
-        sudo apt install -y git tree sane-utils nmap unattended-upgrades dnsutils imagemagick
+		sudo apt remove --purge -y vim-common vim-tiny
+		sudo apt autoremove --purge -y
+        sudo apt install -y git tree sane-utils nmap unattended-upgrades dnsutils imagemagick neovim
         sudo dpkg-reconfigure unattended-upgrades
             # yes
 		vi ~/.ssh/id_ed25519-GitHub.pub
@@ -57,7 +59,9 @@
 		cd
         git clone git@github.com:masonperdue/neovim-config.git
         cd neovim-config
-        ./setup.sh
+		mkdir ~/.config/nvim/lua/
+		ln -sf /home/masonp/neovim-config/nvim/init.lua /home/masonp/.config/nvim/init.lua
+		ln -sf /home/masonp/neovim-config/nvim/lua/* /home/masonp/.config/nvim/lua/
         sudo usermod -aG scanner masonp
 
 # Set raspi dns to cloudflare (so server can update w/o servers running)
