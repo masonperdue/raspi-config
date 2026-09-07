@@ -65,19 +65,6 @@ blocking:
         strategy: blocking
         maxErrorsPerSource: 5
 
-customDNS:
-    customTTL: 1h
-    zone: |
-        $ORIGIN google.com.
-        www 3600 CNAME forcesafesearch.google.com.
-        $ORIGIN bing.com.
-        www 3600 CNAME strict.bing.com.
-        $ORIGIN youtube.com.
-        www 3600 CNAME restrictmoderate.youtube.com.
-        m   3600 CNAME restrictmoderate.youtube.com.
-        $ORIGIN googleapis.com.
-        youtubei 3600 CNAME restrictmoderate.youtube.com.
-
 caching:
     minTime: 5m
     maxTime: 0m
