@@ -3,6 +3,6 @@ Description=Unbound Build Service
 
 [Build]
 ImageTag=localhost/unbound:latest
-SetWorkingDirectory=%h/.config/containers/systemd/unbound/
+SetWorkingDirectory=%h/raspi-config/containers-systemd/unbound/
 File=Containerfile
 Pull=newer
