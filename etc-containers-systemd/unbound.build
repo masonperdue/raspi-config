@@ -1,8 +1,0 @@
-[Unit]
-Description=Unbound Build Service
-
-[Build]
-ImageTag=localhost/unbound:latest
-SetWorkingDirectory=/etc/containers/systemd/unbound/
-File=Containerfile
-Pull=newer
