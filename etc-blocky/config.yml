@@ -14,32 +14,9 @@ blocking:
         ads:
             - /app/denylists/blocklist.txt
             - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
-            - https://raw.githubusercontent.com/anudeepND/blacklist/refs/heads/master/adservers.txt
-            - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
-            - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
-            - https://v.firebog.net/hosts/static/w3kbl.txt
-            - https://adaway.org/hosts.txt
-            - https://v.firebog.net/hosts/AdguardDNS.txt
-            - https://v.firebog.net/hosts/Admiral.txt
-            - https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
-            - https://v.firebog.net/hosts/Easylist.txt
-            - https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
-            - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
-            - https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts
-            - https://v.firebog.net/hosts/Easyprivacy.txt
-            - https://v.firebog.net/hosts/Prigent-Ads.txt
-            - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
-            - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
-            - https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
-            - https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
-            - https://v.firebog.net/hosts/Prigent-Crypto.txt
-            - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
-            - https://phishing.army/download/phishing_army_blocklist_extended.txt
-            - https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
-            - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
-            - https://raw.githubusercontent.com/AssoEchap/stalkerware-indicators/master/generated/hosts
-            - https://urlhaus.abuse.ch/downloads/hostfile/
-            - https://lists.cyberhost.uk/malware.txt
+            - https://v.firebog.net/hosts/lists.php?type=tick
+            - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/doh-vpn-proxy-bypass.txt
+            - https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/nosafesearch.txt
     allowlists:
         ads:
             - /app/allowlists/allowlist.txt
@@ -47,7 +24,7 @@ blocking:
     clientGroupsBlock:
         default:
             - ads
-    blockType: zeroIP
+    blockType: nxDomain
     blockTTL: 1h
     loading:
         refreshPeriod: 24h
@@ -62,6 +39,22 @@ blocking:
         concurrency: 4
         strategy: blocking
         maxErrorsPerSource: 5
+
+customDNS:
+    customTTL: 1h
+    zone: |
+        $ORIGIN google.com.
+        @   3600 CNAME forcesafesearch.google.com.
+        www 3600 CNAME forcesafesearch.google.com.
+        $ORIGIN bing.com.
+        www 3600 CNAME strict.bing.com.
+        $ORIGIN duckduckgo.com.
+        @   3600 CNAME safe.duckduckgo.com.
+        $ORIGIN youtube.com.
+        www 3600 CNAME restrictmoderate.youtube.com.
+        m   3600 CNAME restrictmoderate.youtube.com.
+        $ORIGIN googleapis.com.
+        youtubei 3600 CNAME restrictmoderate.youtube.com.
 
 caching:
     minTime: 5m
