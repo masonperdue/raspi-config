@@ -51,15 +51,12 @@
         git config --global tag.gpgSign true
         git config --global gpg.format ssh
         git config --global user.signingkey ~/.ssh/id_ed25519-GitHub.pub
+        echo "" >> ~/.bashrc
+        echo ". /home/masonp/raspi-config/mybashrc" >> ~/.bashrc
 		cd
         git clone git@github.com:masonperdue/raspi-config.git
-        cd raspi-config
-        echo "" >> /home/masonp/.bashrc
-        echo ". /home/masonp/raspi-config/mybashrc" >> /home/masonp/.bashrc
         source ~/.bashrc
-		cd
-        git clone git@github.com:masonperdue/neovim-config.git
-        cd neovim-config
+        gitClone neovim-config
 		mkdir ~/.config/nvim/lua/
 		ln -sf /home/masonp/neovim-config/nvim/init.lua /home/masonp/.config/nvim/init.lua
 		ln -sf /home/masonp/neovim-config/nvim/lua/* /home/masonp/.config/nvim/lua/
