@@ -3,6 +3,6 @@ Description=Unbound Build Service
 
 [Build]
 ImageTag=localhost/unbound:latest
-SetWorkingDirectory=/etc/containers/systemd/unbound/
+SetWorkingDirectory=%h/.config/containers/systemd/unbound/
 File=Containerfile
 Pull=newer
