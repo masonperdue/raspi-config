@@ -1,0 +1,6 @@
+cdn.flashtalking.com
+use-application-dns.net
+/(.*\.)?bsky\.app$/
+/(.*\.)?bsky\.social$/
+/(.*\.)?bsky\.network$/
+blueskyweb.xyz
