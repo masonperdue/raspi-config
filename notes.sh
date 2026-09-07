@@ -54,7 +54,7 @@
         git clone git@github.com:masonperdue/raspi-config.git
         cd raspi-config
         echo "" >> /home/masonp/.bashrc
-        echo ". /home/masonp/.myconfig/raspi-config/mybashrc" >> /home/masonp/.bashrc
+        echo ". /home/masonp/raspi-config/mybashrc" >> /home/masonp/.bashrc
         source ~/.bashrc
 		cd
         git clone git@github.com:masonperdue/neovim-config.git
