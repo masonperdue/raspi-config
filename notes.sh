@@ -77,12 +77,11 @@
 	echo "net.ipv4.ip_unprivileged_port_start=53" | sudo tee /etc/sysctl.d/99-rootless-dns.conf
 	sudo sysctl --system
 	sudo loginctl enable-linger masonp
-	mkdir ~/.config/{containers/systemd,blocky/cache,unbound/lib}
+	mkdir ~/.config/{containers/systemd,blocky/cache,unbound/lib,systemd/user}
     ln -sf /home/masonp/raspi-config/blocky/* /home/masonp/.config/blocky/
     ln -sf /home/masonp/raspi-config/containers-systemd/* /home/masonp/.config/containers/systemd/
     ln -sf /home/masonp/raspi-config/systemd-user/* /home/masonp/.config/systemd/user/
-    ln -sf /home/masonp/raspi-config/containers-systemd/unbound/* /home/masonp/.config/containers/systemd/unbound/
-	chmod 777 ~/.config/unbound/lib
+	chmod 770 ~/.config/unbound/lib
 	systemctl --user daemon-reload
 	systemctl --user enable --now podman-auto-update.timer
     systemctl --user enable --now unbound-rebuild.timer
@@ -111,24 +110,6 @@
 	sudoedit /etc/systemd/journald.conf
 		# SystemMaxUse=200M
 	sudo systemctl restart systemd-journald
-	mkdir -p ~/.config/systemd/user
-    vi ~/.config/systemd/user/podman-image-prune.service
-		# [Unit]
-		# Description=Prune unused podman images
-		
-		# [Service]
-		# Type=oneshot
-		# ExecStart=/usr/bin/podman image prune -f
-	vi ~/.config/systemd/user/podman-image-prune.timer
-		# [Unit]
-		# Description=Weekly podman image prune
-		
-		# [Timer]
-		# OnCalendar=weekly
-		# Persistent=true
-		
-		# [Install]
-		# WantedBy=timers.target
 	systemctl --user daemon-reload
     systemctl --user enable --now podman-image-prune.timer
     sudo reboot now
