@@ -80,10 +80,12 @@
 	mkdir ~/.config/{containers/systemd,blocky/cache,unbound/lib}
     ln -sf /home/masonp/raspi-config/blocky/* /home/masonp/.config/blocky/
     ln -sf /home/masonp/raspi-config/containers-systemd/* /home/masonp/.config/containers/systemd/
+    ln -sf /home/masonp/raspi-config/systemd-user/* /home/masonp/.config/systemd/user/
     ln -sf /home/masonp/raspi-config/containers-systemd/unbound/* /home/masonp/.config/containers/systemd/unbound/
 	chmod 777 ~/.config/unbound/lib
 	systemctl --user daemon-reload
 	systemctl --user enable --now podman-auto-update.timer
+    systemctl --user enable --now unbound-rebuild.timer
 	systemctl --user start unbound.service blocky.service
     # Testing
         systemctl status unbound.service

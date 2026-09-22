@@ -1,0 +1,6 @@
+[Unit]
+Description=Rebuild unbound image from Containerfile
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user start unbound-build.service

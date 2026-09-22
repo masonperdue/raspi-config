@@ -7,7 +7,7 @@ Wants=unbound-build.service
 Image=unbound.build
 ContainerName=unbound
 Network=host
-AutoUpdate=registry
+AutoUpdate=local
 Volume=%h/.config/unbound/lib:/var/lib/unbound
 
 [Service]
