@@ -73,6 +73,8 @@ caching:
 
 rebindingProtection:
     enable: true
+    allowedDomains:
+      - test.authenticatorlocalprod.com
 
 rateLimit:
     enable: true
